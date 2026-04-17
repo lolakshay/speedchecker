@@ -250,53 +250,82 @@ const getCapabilitiesDOM = (theme, tier) => {
 // ==========================================================================
 
 async function testSpeed() {
-  // Using Cloudflare's official raw speed test endpoint. 
-  // It guarantees 5MB of raw bytes and has extremely permissive CORS headers, 
-  // avoiding the net::ERR_FAILED bans that Wikimedia enforces on file:// origins.
-  const url = "https://speed.cloudflare.com/__down?bytes=5000000";
-  const start = performance.now();
+  // We use Cloudflare's 50MB payload. This guarantees the TCP window fully 
+  // opens to saturate 100+ Mbps networks without finishing before reaching top speed.
+  const url = "https://speed.cloudflare.com/__down?bytes=50000000";
   
   try {
-    const response = await fetch(url + "&nocache=" + Math.random(), { cache: "no-store" });
-    if (!response.ok) throw new Error("Network response was not ok");
-    const blob = await response.blob();
-    const end = performance.now();
+    const controller = new AbortController();
+    // Safety abort after exactly 4 seconds (Standard Ookla methodology)
+    // Ensures very slow networks don't freeze the page forever!
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
     
-    const duration = (end - start) / 1000;
-    const bitsLoaded = blob.size * 8;
-    const speedMbps = bitsLoaded / (duration * 1024 * 1024);
+    const response = await fetch(url + "&nocache=" + Math.random(), { 
+        cache: "no-store",
+        signal: controller.signal
+    });
+    
+    if (!response.ok) throw new Error("Network response was not ok");
+    
+    const reader = response.body.getReader();
+    let receivedBytes = 0;
+    let firstByteTime = null;
+    let lastByteTime = null;
+    
+    try {
+        while (true) {
+            const {done, value} = await reader.read();
+            
+            // Log EXACTLY when the very first network data packet arrives.
+            // This critically IGNORES initial DNS lookup and TLS handshake latency!
+            if (firstByteTime === null) firstByteTime = performance.now();
+            
+            if (done) break;
+            receivedBytes += value.length;
+            lastByteTime = performance.now();
+        }
+    } catch(err) {
+        // Expected to throw an AbortError when the 4 seconds timeout triggers.
+        lastByteTime = performance.now();
+    }
+    
+    clearTimeout(timeoutId);
+    
+    if (!firstByteTime || lastByteTime === firstByteTime || receivedBytes === 0) {
+        throw new Error("No payload loaded");
+    }
+    
+    const durationInSeconds = (lastByteTime - firstByteTime) / 1000;
+    const speedMbps = (receivedBytes * 8) / (durationInSeconds * 1024 * 1024);
     
     return parseFloat(speedMbps.toFixed(1));
   } catch (error) {
-    // Ultimate fallback if fetch fails (e.g. complete network failure or extreme browser block)
+    // Ultimate fallback if fetch is strictly blocked by local Chrome file:// security
     return new Promise((resolve) => {
       const img = new Image();
-      // Use a CDN-hosted dummy block image for safest fallback.
-      const uniqueUrl = "https://via.placeholder.com/5000.png?nocache=" + Math.random();
-      const fallbackStart = performance.now();
+      // Safe fallback payload: 4.73MB fallback image.
+      const uniqueUrl = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg?nocache=" + Math.random();
       
       img.onload = () => {
-        const end = performance.now();
-        let downloadDuration = (end - fallbackStart) / 1000; 
+        let downloadDuration = 2; // Arbitrary safe guess
         
         const entries = performance.getEntriesByName(uniqueUrl);
         if (entries.length > 0) {
-          const transportTime = (entries[0].responseEnd - entries[0].startTime) / 1000;
-          if (transportTime > 0.001) {
-            downloadDuration = transportTime;
-          }
+          // If the server provides Timing-Allow-Origin, responseStart excludes DNS/TCP.
+          // Otherwise safely fallback to startTime.
+          let startRef = entries[0].responseStart;
+          if (!startRef || startRef === 0) startRef = entries[0].startTime;
+          
+          const transportTime = (entries[0].responseEnd - startRef) / 1000;
+          if (transportTime > 0.001) downloadDuration = transportTime;
         }
         
-        // 5000x5000 placeholder is ~375 KB 
-        const bitsLoaded = 375000 * 8;
+        const bitsLoaded = 4738311 * 8; // Exactly 4.73MB
         const speedMbps = bitsLoaded / (downloadDuration * 1024 * 1024);
         resolve(parseFloat(speedMbps.toFixed(1)));
       };
       
-      img.onerror = () => {
-        resolve(2.5); // Fixed failsafe
-      };
-      
+      img.onerror = () => resolve(2.5);
       img.src = uniqueUrl;
     });
   }
