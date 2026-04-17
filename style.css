@@ -1,0 +1,870 @@
+/* ==========================================================================
+   CSS VARIABLES & THEMING
+   ========================================================================== */
+:root {
+  /* Default / Office Theme (Wood) Variables */
+  --bg-color: #2c1a12;
+  --text-color: #f4d0a3;
+  --accent-color: #a0522d;
+  --panel-bg: rgba(60, 35, 20, 0.85);
+  --panel-border: #8b4513;
+  --nav-bg: rgba(61, 35, 20, 0.95);
+  --nav-text: #f4d0a3;
+  --nav-border: #8b4513;
+  --font-main: 'Noto Serif', serif;
+  --font-heading: 'Cinzel', serif;
+  --glow-effect: none;
+  
+  /* Shared Base Sizes */
+  --nav-height: 50px;
+}
+
+/* Gaming Theme Variables */
+.theme-gaming {
+  --bg-color: #0a0a0a;
+  --text-color: #e0e0e0;
+  --accent-color: #00ff41;
+  --accent-alt: #00e5ff;
+  --accent-danger: #ff00ff;
+  --panel-bg: #111111;
+  --panel-border: #333333;
+  --nav-bg: #050505;
+  --nav-text: #00ff41;
+  --nav-border: #00ff41;
+  --font-main: 'Rajdhani', sans-serif;
+  --font-heading: 'Orbitron', sans-serif;
+  --glow-effect: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+}
+
+/* Anime Theme Variables */
+.theme-anime {
+  --bg-color: #1a0533;
+  --text-color: #faf0ff;
+  --accent-color: #ff6eb4; /* Pink */
+  --accent-alt: #ffd700; /* Gold */
+  --panel-bg: rgba(40, 10, 70, 0.85); /* Deep purple semi-transparent */
+  --panel-border: rgba(255, 110, 180, 0.3);
+  --nav-bg: #110222;
+  --nav-text: #ffb7c5;
+  --nav-border: #ff6eb4;
+  --font-main: 'Nunito', sans-serif;
+  --font-heading: 'Cinzel', serif;
+  --glow-effect: 0 0 15px rgba(255, 110, 180, 0.5);
+}
+
+/* ==========================================================================
+   GLOBAL RESET & LAYOUT
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow: hidden; /* NO SCROLLING */
+  height: 100vh;
+  width: 100vw;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+h1, h2, h3, .brand-text {
+  font-family: var(--font-heading);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
+#navbar {
+  height: var(--nav-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: var(--nav-bg);
+  border-bottom: 2px solid var(--nav-border);
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+  z-index: 100;
+  position: relative;
+}
+
+.nav-speed-badge {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--nav-text);
+  padding: 4px 10px;
+  border: 1px solid var(--nav-border);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-tabs {
+  display: flex;
+  height: 100%;
+}
+
+.nav-tab {
+  background: transparent;
+  color: var(--text-color);
+  opacity: 0.6;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0 20px;
+  height: 100%;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-tab:hover {
+  opacity: 0.8;
+}
+
+.nav-tab.active {
+  opacity: 1;
+  color: var(--nav-text);
+  border-bottom-color: var(--accent-color);
+}
+
+/* ==========================================================================
+   MAIN APP CONTAINER
+   ========================================================================== */
+#app-container {
+  height: calc(100vh - var(--nav-height));
+  width: 100%;
+  position: relative;
+}
+
+.page {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s;
+  padding: 20px;
+  gap: 20px;
+}
+
+.page.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   PANEL LAYOUT
+   ========================================================================== */
+.panel {
+  background-color: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+  height: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.left-panel {
+  width: 30%;
+}
+
+.right-panel {
+  width: 70%;
+}
+
+/* Gaming overrides panel width to flip */
+#page-gaming .left-panel { width: 70%; }
+#page-gaming .right-panel { width: 30%; }
+
+/* ==========================================================================
+   SPEED CARD STYLES
+   ========================================================================== */
+.speed-card {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.speed-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.speed-number {
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1;
+  font-family: var(--font-heading);
+  transition: color 0.3s;
+}
+
+.speed-unit {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: -5px;
+  opacity: 0.8;
+}
+
+.tier-badge {
+  padding: 8px 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.badge-unknown { background: #666; color: white; }
+.badge-survival { background: #e53e3e; color: white; }
+.badge-usable { background: #d69e2e; color: white; }
+.badge-smooth { background: #38a169; color: white; }
+.badge-god { background: #3182ce; color: white; }
+
+.btn-retest {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: var(--accent-color);
+  color: #fff;
+  transition: transform 0.2s, filter 0.2s;
+  width: 80%;
+  max-width: 250px;
+}
+
+.btn-retest:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.btn-retest:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   CONTENT PANEL STYLES
+   ========================================================================== */
+.content-panel {
+  justify-content: center;
+}
+
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tier-title {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--panel-border);
+}
+
+.capabilities-list {
+  list-style: none;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  margin-bottom: auto; /* Pushes quote to bottom */
+}
+
+.capabilities-list li {
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 30px;
+}
+
+.capabilities-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.quote-container {
+  margin-top: 40px;
+  padding: 25px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-left: 5px solid var(--accent-color);
+  font-style: italic;
+  border-radius: 0 8px 8px 0;
+}
+
+.quote-text {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* ==========================================================================
+   THEME SPECIFIC CUSTOMIZATIONS
+   ========================================================================== */
+
+/* --- OFFICE THEME (Wood Classic) --- */
+.theme-office {
+  background-image: url('https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=2000&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 2000px rgba(30, 15, 5, 0.7);
+}
+
+#page-office .panel {
+  background: linear-gradient(135deg, rgba(80, 45, 25, 0.85), rgba(60, 30, 15, 0.95));
+  border: 2px solid #a0522d;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.5);
+  border-radius: 6px;
+}
+
+#page-office .tier-title {
+  color: #ffdead;
+  border-bottom: 2px solid #8b4513;
+}
+
+#page-office .quote-container {
+  background-color: rgba(0,0,0,0.25);
+  border-left: 5px solid #a0522d;
+  color: #f4d0a3;
+}
+
+#page-office .btn-retest {
+  background: linear-gradient(to bottom, #8b4513, #5a2e0c);
+  border: 1px solid #a0522d;
+  color: #ffdead;
+  border-radius: 4px;
+}
+
+#page-office .btn-retest:hover {
+  background: linear-gradient(to bottom, #a0522d, #8b4513);
+  box-shadow: 0 0 10px rgba(160, 82, 45, 0.5);
+}
+
+#page-office .badge-survival { background: #8b0000; color: #ffdead; border: 1px solid #ff0000; }
+#page-office .badge-usable { background: #b8860b; color: #fff; border: 1px solid #ffd700; }
+#page-office .badge-smooth { background: #228b22; color: #fff; border: 1px solid #32cd32; }
+#page-office .badge-god { 
+  background: linear-gradient(135deg, #1b3d58, #3b749d); 
+  color: #fff; 
+  border: 1px solid #87ceeb; 
+}
+
+/* --- GAMING THEME --- */
+#page-gaming .panel {
+  box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.05);
+}
+
+.glow-text {
+  text-shadow: var(--glow-effect);
+}
+
+.neon-badge {
+  background: transparent !important;
+  border: 2px solid currentColor;
+  box-shadow: var(--glow-effect);
+}
+
+.neon-badge.badge-survival { color: var(--accent-danger); box-shadow: 0 0 10px var(--accent-danger); border-color: var(--accent-danger); }
+.neon-badge.badge-usable { color: #ffeb3b; box-shadow: 0 0 10px #ffeb3b; border-color: #ffeb3b; }
+.neon-badge.badge-smooth { color: var(--accent-color); box-shadow: 0 0 10px var(--accent-color); border-color: var(--accent-color); }
+.neon-badge.badge-god { color: var(--accent-alt); box-shadow: 0 0 15px var(--accent-alt); border-color: var(--accent-alt); }
+
+.btn-cyber {
+  background: transparent;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cyber:hover {
+  background: var(--accent-color);
+  color: #000;
+  box-shadow: var(--glow-effect);
+}
+
+#page-gaming .quote-container {
+  background-color: transparent;
+  border: 1px solid var(--panel-border);
+  box-shadow: inset 0 0 10px rgba(0,255,65,0.1);
+}
+
+#page-gaming .capabilities-list li::before {
+  content: "»";
+  color: var(--accent-alt);
+}
+
+/* Scanline Effect */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0.2) 50%,
+    rgba(0,0,0,0.2)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.5;
+}
+
+/* --- ANIME THEME --- */
+.cinematic-wrapper {
+  justify-content: center;
+}
+
+.anime-title {
+  color: var(--accent-alt);
+  letter-spacing: 4px;
+}
+
+.cinematic-text {
+  background: linear-gradient(to right, var(--accent-color), var(--accent-alt));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0px 0px 20px rgba(255, 110, 180, 0.3);
+}
+
+.magic-badge {
+  background: linear-gradient(45deg, var(--accent-color), #9c27b0);
+  box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.magic-badge.badge-survival { background: linear-gradient(45deg, #880e4f, #d50000); }
+.magic-badge.badge-usable { background: linear-gradient(45deg, #e65100, #ffb300); }
+.magic-badge.badge-smooth { background: linear-gradient(45deg, #1b5e20, #00e676); }
+.magic-badge.badge-god { background: linear-gradient(45deg, #311b92, #d500f9); }
+
+.btn-magic {
+  background: transparent;
+  border: 2px solid var(--accent-color);
+  border-radius: 30px;
+  color: var(--text-color);
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.btn-magic:hover {
+  background: rgba(255, 110, 180, 0.2);
+  box-shadow: 0 0 15px var(--accent-color);
+  border-color: var(--accent-alt);
+}
+
+.anime-quote-container {
+  background: linear-gradient(90deg, rgba(255,110,180,0.1), transparent);
+  border-left: 3px solid var(--accent-alt);
+  border-radius: 0;
+}
+
+#page-anime .capabilities-list li::before {
+  content: "✧";
+  color: var(--accent-alt);
+}
+
+/* ==========================================================================
+   EASTER EGGS & SPECIAL EFFECTS
+   ========================================================================== */
+
+.easter-egg-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.95);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.easter-egg-overlay.hidden {
+  display: none !important;
+}
+
+.blink-neon {
+  color: #ff00ff;
+  text-shadow: 0 0 20px #ff00ff;
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  animation: blink 0.1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cheat-code {
+  background: red !important;
+}
+
+.strobe-neon {
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 5rem;
+  animation: strobe 0.05s infinite;
+}
+
+@keyframes strobe {
+  0% { text-shadow: 0 0 50px #fff; transform: scale(1); }
+  100% { text-shadow: 0 0 100px #00ff41; transform: scale(1.05); }
+}
+
+.ascii-art {
+  font-family: monospace;
+  color: var(--accent-color);
+  font-size: 2rem;
+  margin-top: 30px;
+  line-height: 1.2;
+}
+
+.nani-face {
+  color: #fff;
+  font-size: 5rem;
+}
+
+.dramatic-text {
+  font-family: var(--font-heading);
+  font-size: 8rem;
+  color: #fff;
+  text-shadow: 5px 5px 0 #ff0000;
+  letter-spacing: 10px;
+}
+
+.golden-glow {
+  font-family: var(--font-heading);
+  font-size: 6rem;
+  color: #ffd700;
+  text-shadow: 0 0 50px #ffd700, 0 0 100px #ffd700;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.power-up-aura {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0) 70%);
+  position: absolute;
+  z-index: -1;
+  animation: auraRotate 3s linear infinite;
+}
+
+@keyframes auraRotate {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.floating-message {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(0,0,0,0.8);
+  color: var(--accent-alt);
+  padding: 15px 25px;
+  border-radius: 20px;
+  border: 1px solid var(--accent-color);
+  font-style: italic;
+  z-index: 100;
+  animation: floatMsg 3s ease-in-out infinite;
+}
+
+@keyframes floatMsg {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-color);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid var(--panel-border);
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+/* Glitch animation class for speed numbers */
+.glitch-anim {
+  animation: glitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-5px, 5px) }
+  40% { transform: translate(-5px, -5px) }
+  60% { transform: translate(5px, 5px) }
+  80% { transform: translate(5px, -5px) }
+  100% { transform: translate(0) }
+}
+
+/* Sakura petal */
+.sakura-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.petal {
+  position: absolute;
+  background: linear-gradient(135deg, #ffb7c5, #ff6eb4);
+  border-radius: 15px 0 15px 0;
+  opacity: 0.6;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  0% { transform: translate(0, -10px) rotate(0deg); opacity: 0;}
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translate(var(--tx), 100vh) rotate(var(--rot)); opacity: 0; }
+}
+
+.sakura-fast .petal {
+  animation-duration: 2s !important;
+}
+
+/* ==========================================================================
+   MOBILE OPTIMIZATION (< 768px)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  :root {
+    --nav-height: 40px;
+  }
+  
+  /* Navigation */
+  #navbar {
+    padding: 0 5px;
+  }
+  .nav-branding {
+    display: none; 
+  }
+  .nav-tabs {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .nav-tab {
+    padding: 0 5px;
+    font-size: 0.8rem;
+    flex: 1;
+    text-align: center;
+  }
+
+  /* Page Layout */
+  .page {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  #page-gaming.page {
+    /* Forces speed card to be on top in Gaming mode */
+    flex-direction: column-reverse;
+  }
+
+  .panel {
+    width: 100% !important; 
+    height: auto !important; /* CRITICAL FIX: nullifies previous height:100% bleeding into phones */
+    padding: 12px 15px !important; 
+    flex: none; 
+    box-shadow: none;
+    border-radius: 8px;
+  }
+  
+  #page-gaming .left-panel, 
+  #page-gaming .right-panel {
+    width: 100% !important;
+  }
+  
+  /* Horizontal Speed Card compression for Mobile */
+  .speed-card {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px;
+  }
+
+  .card-title {
+    width: 100%;
+    font-size: 1.1rem;
+    margin-bottom: 0px;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  .speed-display {
+    width: 100%;
+    flex-direction: row !important;
+    align-items: baseline !important;
+    justify-content: center !important;
+    margin-bottom: 5px !important;
+  }
+
+  .speed-number {
+    font-size: 3rem;
+    margin-right: 8px;
+  }
+  
+  .speed-unit {
+    font-size: 0.9rem;
+    margin-top: 0;
+  }
+
+  .tier-badge {
+    flex: 0 0 48%; /* Half width */
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    margin-bottom: 0 !important;
+    text-align: center;
+  }
+
+  .btn-retest {
+    flex: 0 0 48%; /* Half width */
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    width: auto;
+    margin: 0;
+  }
+
+  /* Content Panel Shrinkage */
+  .content-panel {
+    flex: 1 1 0 !important; /* Stretch safely */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .tier-title {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+  }
+
+  .capabilities-list {
+    flex: 1 1 auto;
+    font-size: 0.85rem;
+    line-height: 1.25;
+    margin-bottom: 5px;
+  }
+
+  .capabilities-list li {
+    margin-bottom: 4px;
+    padding-left: 15px;
+  }
+
+  .capabilities-list li::before {
+    font-size: 1rem;
+  }
+
+  .quote-container {
+    margin-top: auto;
+    padding: 8px 10px;
+    border-radius: 4px;
+    height: auto;
+  }
+
+  .quote-text {
+    font-size: 0.8rem;
+  }
+  
+  /* specific tweaks for themes */
+  .anime-quote-container {
+    border-left-width: 3px;
+  }
+  
+  /* Easter eggs scaling */
+  .dramatic-text { font-size: 2.5rem; letter-spacing: 3px; }
+  .nani-face { font-size: 1.5rem; }
+  .ascii-art { font-size: 0.6rem; }
+  .golden-glow { font-size: 2.2rem; }
+  .strobe-neon { font-size: 2.2rem; }
+  .blink-neon { font-size: 1.5rem; }
+}

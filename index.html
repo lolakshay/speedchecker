@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speed Test | Is Your Net Good Enough?</title>
+  
+  <!-- Font References -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=IBM+Plex+Sans:wght@300;400;600&family=Inter:wght@300;400;600;800&family=Noto+Serif:wght@400;700&family=Nunito:wght@300;400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-office">
+
+  <!-- Navigation Bar -->
+  <nav id="navbar">
+    <div class="nav-branding">
+      <div id="nav-speed-badge" class="nav-speed-badge">⚡ -- Mbps</div>
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-theme="office">Office</button>
+      <button class="nav-tab" data-theme="gaming">Gaming</button>
+      <button class="nav-tab" data-theme="anime">Anime & Streaming</button>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main id="app-container">
+    
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+      <div class="spinner"></div>
+      <p class="loading-text">Testing connection...</p>
+    </div>
+
+    <!-- ==============================================
+         PAGE 1: OFFICE / MEETINGS
+         ============================================== -->
+    <section id="page-office" class="page active">
+      <!-- Left Panel: Speed Card -->
+      <div class="panel left-panel speed-card">
+        <h2 class="card-title">YOUR SPEED</h2>
+        <div class="speed-display">
+          <span id="office-speed-num" class="speed-number">--</span>
+          <span class="speed-unit">Mbps</span>
+        </div>
+        <div id="office-tier-badge" class="tier-badge badge-unknown">TESTING</div>
+        <button class="btn-retest" onclick="runTest()">Test Again</button>
+      </div>
+      
+      <!-- Right Panel: Dynamic Content -->
+      <div class="panel right-panel content-panel">
+        <div class="content-wrapper">
+          <h1 id="office-tier-title" class="tier-title">CONNECTING...</h1>
+          <ul id="office-capabilities" class="capabilities-list">
+            <li>Running network diagnostics...</li>
+          </ul>
+          <div class="quote-container">
+            <p id="office-quote" class="quote-text">"Pinging headquarters..."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         PAGE 2: GAMING
+         ============================================== -->
+    <section id="page-gaming" class="page">
+      <!-- Left Panel: Dynamic Content (Mirrored) -->
+      <div class="panel left-panel content-panel">
+        <div class="content-wrapper">
+          <h1 id="gaming-tier-title" class="tier-title glow-text">INITIALIZING...</h1>
+          <ul id="gaming-capabilities" class="capabilities-list">
+            <li>Syncing with game server...</li>
+          </ul>
+          <div class="quote-container">
+            <p id="gaming-quote" class="quote-text">"Loading assets..."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Speed Card (Mirrored) -->
+      <div class="panel right-panel speed-card">
+        <h2 class="card-title glow-text">NET POWER</h2>
+        <div class="speed-display">
+          <span id="gaming-speed-num" class="speed-number glow-text">--</span>
+          <span class="speed-unit">Mbps</span>
+        </div>
+        <div id="gaming-tier-badge" class="tier-badge neon-badge badge-unknown">TESTING</div>
+        <button class="btn-retest btn-cyber" onclick="runTest()">RETEST</button>
+      </div>
+
+      <!-- Gaming Easter Eggs Overlays -->
+      <div id="gaming-easter-1" class="easter-egg-overlay hidden">
+        <h1 class="blink-neon">YOU ARE PERFECTLY MEDIOCRE.<br>THE AVERAGE GAMER.<br>NOOB.</h1>
+      </div>
+      <div id="gaming-easter-konami" class="easter-egg-overlay cheat-code hidden">
+        <h1 class="strobe-neon">CHEAT CODE ACTIVATED</h1>
+        <p class="blink-neon">GOD MODE UNLOCKED... JK check ur wifi</p>
+      </div>
+      <div id="gaming-easter-nasa" class="easter-egg-overlay hidden">
+        <h1 class="glow-text">ARE YOU RUNNING THIS ON NASA'S NETWORK???</h1>
+        <pre class="ascii-art">
+   /\
+  (  )
+  (  )
+ /|/\|\
+/_||||_\
+        </pre>
+      </div>
+      
+      <!-- Scanline Overlay -->
+      <div class="scanlines"></div>
+    </section>
+
+    <!-- ==============================================
+         PAGE 3: ANIME & MOVIE STREAMING
+         ============================================== -->
+    <section id="page-anime" class="page">
+      <!-- Left Panel: Speed Card -->
+      <div class="panel left-panel speed-card cinematic-card">
+        <h2 class="card-title anime-title">STREAM POWER</h2>
+        <div class="speed-display">
+          <span id="anime-speed-num" class="speed-number cinematic-text">--</span>
+          <span class="speed-unit">Mbps</span>
+        </div>
+        <div id="anime-tier-badge" class="tier-badge magic-badge badge-unknown">TESTING</div>
+        <button class="btn-retest btn-magic" onclick="runTest()">Retest</button>
+      </div>
+      
+      <!-- Right Panel: Dynamic Content -->
+      <div class="panel right-panel content-panel">
+        <div class="content-wrapper cinematic-wrapper">
+          <h1 id="anime-tier-title" class="tier-title cinematic-title">LOADING...</h1>
+          <ul id="anime-capabilities" class="capabilities-list">
+            <li>Buffering subtitles...</li>
+          </ul>
+          <div class="quote-container anime-quote-container">
+            <p id="anime-quote" class="quote-text">"Waiting for episode release..."</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sakura Petals Container -->
+      <div id="sakura-container" class="sakura-container"></div>
+      
+      <!-- Anime Easter Eggs Overlays -->
+      <div id="anime-easter-nani" class="easter-egg-overlay hidden">
+        <h1 class="dramatic-text">NANI?!</h1>
+        <pre class="ascii-art nani-face">
+ (⊙_⊙)
+        </pre>
+      </div>
+      <div id="anime-easter-instinct" class="easter-egg-overlay hidden">
+        <h1 class="golden-glow">ULTRA INSTINCT ACHIEVED</h1>
+        <div class="power-up-aura"></div>
+      </div>
+      <div id="anime-idle-message" class="floating-message hidden">
+        Still here? Even your Wi-Fi is more committed than most anime protagonists.
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
