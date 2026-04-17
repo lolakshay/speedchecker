@@ -250,53 +250,61 @@ const getCapabilitiesDOM = (theme, tier) => {
 // ==========================================================================
 
 async function testSpeed() {
-  // We use Cloudflare's 50MB payload. This guarantees the TCP window fully 
-  // opens to saturate 100+ Mbps networks without finishing before reaching top speed.
-  const url = "https://speed.cloudflare.com/__down?bytes=50000000";
+  // Mobile networks have higher latency, which strictly throttles single TCP connections 
+  // to ~20-30 Mbps maximum, regardless of the actual bandwidth available!
+  // To reach your native 90 Mbps Ookla speeds, we must emulate Ookla's architecture
+  // by opening multiple concurrent network streams parallel to each other.
+  const url = "https://speed.cloudflare.com/__down?bytes=25000000"; // 25MB per lane
+  const THREADS = 4; // 4 concurrent connections
   
   try {
     const controller = new AbortController();
-    // Safety abort after exactly 4 seconds (Standard Ookla methodology)
-    // Ensures very slow networks don't freeze the page forever!
+    // Safety abort after exactly 4 seconds
     const timeoutId = setTimeout(() => controller.abort(), 4000);
     
-    const response = await fetch(url + "&nocache=" + Math.random(), { 
-        cache: "no-store",
-        signal: controller.signal
-    });
-    
-    if (!response.ok) throw new Error("Network response was not ok");
-    
-    const reader = response.body.getReader();
-    let receivedBytes = 0;
+    let totalBytes = 0;
     let firstByteTime = null;
     let lastByteTime = null;
     
-    try {
+    // Launch 4 parallel HTTP pipeline workers
+    const workers = Array.from({ length: THREADS }).map(async () => {
+      try {
+        const response = await fetch(url + "&nocache=" + Math.random(), { 
+            cache: "no-store",
+            signal: controller.signal
+        });
+        
+        if (!response.ok) return;
+        
+        const reader = response.body.getReader();
+        
         while (true) {
             const {done, value} = await reader.read();
             
-            // Log EXACTLY when the very first network data packet arrives.
-            // This critically IGNORES initial DNS lookup and TLS handshake latency!
+            // Log exactly when the first byte of ANY thread touches the device
             if (firstByteTime === null) firstByteTime = performance.now();
             
             if (done) break;
-            receivedBytes += value.length;
+            
+            totalBytes += value.length;
             lastByteTime = performance.now();
         }
-    } catch(err) {
-        // Expected to throw an AbortError when the 4 seconds timeout triggers.
+      } catch(err) {
+        // Automatically catches the AbortError when the 4s cutoff hits
         lastByteTime = performance.now();
-    }
+      }
+    });
     
+    // Process all threads simultaneously
+    await Promise.all(workers);
     clearTimeout(timeoutId);
     
-    if (!firstByteTime || lastByteTime === firstByteTime || receivedBytes === 0) {
+    if (!firstByteTime || totalBytes === 0) {
         throw new Error("No payload loaded");
     }
     
     const durationInSeconds = (lastByteTime - firstByteTime) / 1000;
-    const speedMbps = (receivedBytes * 8) / (durationInSeconds * 1024 * 1024);
+    const speedMbps = (totalBytes * 8) / (durationInSeconds * 1024 * 1024);
     
     return parseFloat(speedMbps.toFixed(1));
   } catch (error) {
