@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Speed Test | Is Your Net Good Enough?</title>
+  <title>Minimum Internet Speed for Google Meet & Zoom | Speed Test</title>
+  <meta name="description" content="Test your connection and find out the minimum internet speed for Google Meet, Zoom, and online classes. Determine if your Mbps is enough for video calls.">
   
+  <meta property="og:title" content="Minimum Internet Speed for Google Meet & Zoom | Speed Test">
+  <meta property="og:description" content="Test your connection and find out the minimum internet speed for Google Meet, Zoom, and online classes. Determine if your Mbps is enough for video calls.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tgnas.github.io/gmeet-checker/">
   <!-- Font References -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +20,8 @@
 <body class="theme-office">
 
   <!-- Navigation Bar -->
-  <nav id="navbar">
+  <header>
+    <nav id="navbar">
     <div class="nav-branding">
       <div id="nav-speed-badge" class="nav-speed-badge">⚡ -- Mbps</div>
     </div>
@@ -24,7 +30,8 @@
       <button class="nav-tab" data-theme="gaming">Gaming</button>
       <button class="nav-tab" data-theme="anime">Anime & Streaming</button>
     </div>
-  </nav>
+    </nav>
+  </header>
 
   <!-- Main Container -->
   <main id="app-container">
@@ -41,7 +48,7 @@
     <section id="page-office" class="page active">
       <!-- Left Panel: Speed Card -->
       <div class="panel left-panel speed-card">
-        <h2 class="card-title">YOUR SPEED</h2>
+        <h3 class="card-title">YOUR SPEED</h3>
         <div class="speed-display">
           <span id="office-speed-num" class="speed-number">--</span>
           <span class="speed-unit">Mbps</span>
@@ -53,7 +60,7 @@
       <!-- Right Panel: Dynamic Content -->
       <div class="panel right-panel content-panel">
         <div class="content-wrapper">
-          <h1 id="office-tier-title" class="tier-title">CONNECTING...</h1>
+          <h2 id="office-tier-title" class="tier-title">CONNECTING...</h2>
           <ul id="office-capabilities" class="capabilities-list">
             <li>Running network diagnostics...</li>
           </ul>
@@ -71,7 +78,7 @@
       <!-- Left Panel: Dynamic Content (Mirrored) -->
       <div class="panel left-panel content-panel">
         <div class="content-wrapper">
-          <h1 id="gaming-tier-title" class="tier-title glow-text">INITIALIZING...</h1>
+          <h2 id="gaming-tier-title" class="tier-title glow-text">INITIALIZING...</h2>
           <ul id="gaming-capabilities" class="capabilities-list">
             <li>Syncing with game server...</li>
           </ul>
@@ -83,7 +90,7 @@
 
       <!-- Right Panel: Speed Card (Mirrored) -->
       <div class="panel right-panel speed-card">
-        <h2 class="card-title glow-text">NET POWER</h2>
+        <h3 class="card-title glow-text">NET POWER</h3>
         <div class="speed-display">
           <span id="gaming-speed-num" class="speed-number glow-text">--</span>
           <span class="speed-unit">Mbps</span>
@@ -94,14 +101,14 @@
 
       <!-- Gaming Easter Eggs Overlays -->
       <div id="gaming-easter-1" class="easter-egg-overlay hidden">
-        <h1 class="blink-neon">YOU ARE PERFECTLY MEDIOCRE.<br>THE AVERAGE GAMER.<br>NOOB.</h1>
+        <div class="blink-neon">YOU ARE PERFECTLY MEDIOCRE.<br>THE AVERAGE GAMER.<br>NOOB.</div>
       </div>
       <div id="gaming-easter-konami" class="easter-egg-overlay cheat-code hidden">
-        <h1 class="strobe-neon">CHEAT CODE ACTIVATED</h1>
+        <div class="strobe-neon">CHEAT CODE ACTIVATED</div>
         <p class="blink-neon">GOD MODE UNLOCKED... JK check ur wifi</p>
       </div>
       <div id="gaming-easter-nasa" class="easter-egg-overlay hidden">
-        <h1 class="glow-text">ARE YOU RUNNING THIS ON NASA'S NETWORK???</h1>
+        <div class="glow-text fs-lg">ARE YOU RUNNING THIS ON NASA'S NETWORK???</div>
         <pre class="ascii-art">
    /\
   (  )
@@ -121,7 +128,7 @@
     <section id="page-anime" class="page">
       <!-- Left Panel: Speed Card -->
       <div class="panel left-panel speed-card cinematic-card">
-        <h2 class="card-title anime-title">STREAM POWER</h2>
+        <h3 class="card-title anime-title">STREAM POWER</h3>
         <div class="speed-display">
           <span id="anime-speed-num" class="speed-number cinematic-text">--</span>
           <span class="speed-unit">Mbps</span>
@@ -133,7 +140,7 @@
       <!-- Right Panel: Dynamic Content -->
       <div class="panel right-panel content-panel">
         <div class="content-wrapper cinematic-wrapper">
-          <h1 id="anime-tier-title" class="tier-title cinematic-title">LOADING...</h1>
+          <h2 id="anime-tier-title" class="tier-title cinematic-title">LOADING...</h2>
           <ul id="anime-capabilities" class="capabilities-list">
             <li>Buffering subtitles...</li>
           </ul>
@@ -148,13 +155,13 @@
       
       <!-- Anime Easter Eggs Overlays -->
       <div id="anime-easter-nani" class="easter-egg-overlay hidden">
-        <h1 class="dramatic-text">NANI?!</h1>
+        <div class="dramatic-text">NANI?!</div>
         <pre class="ascii-art nani-face">
  (⊙_⊙)
         </pre>
       </div>
       <div id="anime-easter-instinct" class="easter-egg-overlay hidden">
-        <h1 class="golden-glow">ULTRA INSTINCT ACHIEVED</h1>
+        <div class="golden-glow">ULTRA INSTINCT ACHIEVED</div>
         <div class="power-up-aura"></div>
       </div>
       <div id="anime-idle-message" class="floating-message hidden">
@@ -164,6 +171,124 @@
 
   </main>
 
-  <script src="script.js"></script>
+  <!-- ==============================================
+       SEO & FAQ CONTENT SECTION
+       ============================================== -->
+  <section class="seo-section">
+    <div class="seo-container">
+      <h1>Minimum Internet Speed for Google Meet & Video Calls</h1>
+      <p class="seo-intro">Wondering about the <strong>minimum internet speed for Google Meet</strong> or if your connection is fast enough for Zoom? Whether you're attending an online class or presenting to a client, having the right Mbps is crucial. Our speed checker accurately simulates the network demands of modern video conferencing to let you know exactly where you stand.</p>
+
+      <h2>Minimum Speed Required for Video Calls</h2>
+      <div class="seo-card-grid">
+        <div class="seo-card">
+          <h3>Google Meet</h3>
+          <p>The absolute minimum is <strong>3.2 Mbps</strong> for HD video. However, for a stable group call, a minimum internet speed for Google Meet of at least <strong>5-10 Mbps</strong> download/upload is strongly recommended.</p>
+        </div>
+        <div class="seo-card">
+          <h3>Zoom</h3>
+          <p>What is the minimum internet speed for Zoom? Zoom requires at least <strong>1.5 Mbps</strong> (up/down) for single 720p HD calls, and <strong>3.0 Mbps</strong> for 1080p. For group calls, aim for at least 3-4 Mbps.</p>
+        </div>
+        <div class="seo-card">
+          <h3>Online Classes / General</h3>
+          <p><strong>Can I attend an online class with 1 Mbps?</strong> Yes, but only with your camera off and likely dealing with robotic audio. A minimum of 3-5 Mbps is required to both see the screen share clearly and engage.</p>
+        </div>
+      </div>
+
+      <h2>Why Do Video Calls Lag?</h2>
+      <p>Your video call lag isn't always about your download speed. The true culprits are often:</p>
+      <ul>
+        <li><strong>Low Upload Speed:</strong> While you might have 100 Mbps download, your upload speed must be at least 3 Mbps for others to see you clearly.</li>
+        <li><strong>High Latency (Ping):</strong> If your ping exceeds 100ms, your audio will be out of sync.</li>
+        <li><strong>Packet Loss:</strong> Wi-Fi interference causes data packets to drop, resulting in stuttering and robotic voices.</li>
+      </ul>
+
+      <h2>Tips to Improve Your Internet for Meetings</h2>
+      <p>If our speed test gave you a bad score, try these actionable tips:</p>
+      <ol>
+        <li><strong>Use an Ethernet Cable:</strong> Hardwiring your computer instantly eliminates Wi-Fi packet loss.</li>
+        <li><strong>Close Background Apps:</strong> Pause downloads and close Netflix or streaming apps during your call.</li>
+        <li><strong>Turn Off HD Video or Camera:</strong> If you're on a survival-tier connection (< 2 Mbps), manually switch your video send resolution in Google Meet settings to 360p or turn the camera off completely.</li>
+        <li><strong>Move Closer to the Router:</strong> Physical distance and walls destroy 5GHz Wi-Fi bands.</li>
+      </ol>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <div class="faq-container">
+        
+        <details class="faq-item">
+          <summary>What is a good internet speed for working from home?</summary>
+          <div class="faq-content">
+            <p>A good internet speed for working from home is <strong>at least 25 Mbps download and 10 Mbps upload</strong>. This ensures you can join video calls smoothly, use VPNs, and download files simultaneously without interrupting your meetings.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is 10 Mbps fast enough for Zoom?</summary>
+          <div class="faq-content">
+            <p>Yes, <strong>10 Mbps is fast enough for Zoom</strong>. It far exceeds Zoom's 3.0 Mbps requirement for 1080p HD group video calls. As long as your upload speed is also above 3 Mbps and your latency is low, your connection will be completely smooth.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I use Google Meet on mobile data (4G/LTE)?</summary>
+          <div class="faq-content">
+            <p>Yes, but mobile data latency and packet loss can cause stutters. On 4G, you can easily achieve the 3-5 Mbps required, but your signal strength must be excellent. If you have only 2 bars of 4G, expect lag and turn your camera off.</p>
+          </div>
+        </details>
+
+      </div>
+      
+      <div class="seo-cta">
+        <p>Before your next big meeting, always verify your connection.</p>
+        <button class="cta-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">Run Speed Test</button>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Speed Checker. Built for smooth online meetings and seamless gaming.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Minimum Internet Speed for Google Meet & Zoom | Speed Test",
+    "description": "Test your connection and find out the minimum internet speed for Google Meet, Zoom, and online classes.",
+    "url": "https://tgnas.github.io/gmeet-checker/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is a good internet speed for working from home?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A good internet speed for working from home is at least 25 Mbps download and 10 Mbps upload. This ensures you can join video calls smoothly, use VPNs, and download files simultaneously."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Is 10 Mbps fast enough for Zoom?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, 10 Mbps is fast enough for Zoom. It far exceeds Zoom's 3.0 Mbps requirement for 1080p HD group video calls."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Can I use Google Meet on mobile data (4G/LTE)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, but mobile data latency and packet loss can cause stutters. On 4G, you can easily achieve the 3-5 Mbps required, but your signal strength must be excellent."
+      }
+    }]
+  }
+  </script>
 </body>
 </html>
