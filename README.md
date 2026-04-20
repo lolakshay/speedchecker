@@ -116,5 +116,5 @@ Each tier includes:
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/speedchecker.git
+git clone https://github.com/lolakshay/speedchecker.git
 cd speedchecker
