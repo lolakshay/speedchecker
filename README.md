@@ -61,13 +61,6 @@ Each tier includes:
 
 ---
 
-## 📂 Project Structure
-speedchecker/
-│
-├── index.html # Main UI
-├── style.css # Styling & themes
-├── script.js # Core logic
-└── README.md # Documentation
 ---
 
 ## ⚙️ How It Works
